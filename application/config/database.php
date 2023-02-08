@@ -73,19 +73,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $active_group = 'default';
 $query_builder = TRUE;
 
-	// 'hostname' => '34.101.159.122',
-	// 'username' => 'dbedu',
-	// 'password' => 'Enitas@2019',
-	// 'database' => 'edu_tryout1',
-
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'edunov',
-	'password' => 'gilland5uk5e5',
-	'database' => 'edunov_db',
+
+		'hostname' => 'localhost',
+	'username' => 'root',
+	'password' => '',
+	'database' => 'javan',
 	'dbdriver' => 'mysqli',
+
+	
+	// 'hostname' => '103.241.179.9',
+	// 'username' => 'hrd_gg',
+	// 'password' => '20215uk5e5',
+	// 'database' => 'hrd_gg',
+	// 'dbdriver' => 'mysqli',
+
+
 	'dbprefix' => '',
 	'pconnect' => FALSE,
 	'db_debug' => (ENVIRONMENT !== 'production'),

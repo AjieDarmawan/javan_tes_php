@@ -42,7 +42,7 @@
       <!-- <img src="<?php echo base_url('assets/img/'); ?>logo_telkomsat.png" class="img-responsive center-block" style="margin-top:20px"> -->
       <!-- <img src="<?php echo base_url('assets/img/'); ?>logo_telkomsat.png" style="width:35%;"> -->
       <br>
-      <center><h4><b>PT Gilland Ganesha</b></h4></center>
+      <center><h4><b>PHP PROGREMMER</b></h4></center>
       <br>
       <?php if (!empty($message)) {
     ?>

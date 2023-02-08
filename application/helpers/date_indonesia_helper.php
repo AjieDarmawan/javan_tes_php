@@ -22,6 +22,37 @@ function TanggalIndo($date)
 	return($result);
 }
 
+function BulanIndo($bln){
+	$bulan = $bln;
+	Switch ($bulan){
+	 case 1 : $bulan="Januari";
+	 Break;
+	 case 2 : $bulan="Februari";
+	 Break;
+	 case 3 : $bulan="Maret";
+	 Break;
+	 case 4 : $bulan="April";
+	 Break;
+	 case 5 : $bulan="Mei";
+	 Break;
+	 case 6 : $bulan="Juni";
+	 Break;
+	 case 7 : $bulan="Juli";
+	 Break;
+	 case 8 : $bulan="Agustus";
+	 Break;
+	 case 9 : $bulan="September";
+	 Break;
+	 case 10 : $bulan="Oktober";
+	 Break;
+	 case 11 : $bulan="November";
+	 Break;
+	 case 12 : $bulan="Desember";
+	 Break;
+	 }
+	return $bulan;
+}
+
 function DayIndonesia($tanggal)
 {
 	$day = date('N', $tanggal);	
@@ -66,56 +97,50 @@ function dateDifference($date_1 , $date_2 , $differenceFormat = '%a' )
     
 }
 
-function mencarihari($date){
-	$daftar_hari = array(
-		'Sunday' => 'Minggu',
-		'Monday' => 'Senin',
-		'Tuesday' => 'Selasa',
-		'Wednesday' => 'Rabu',
-		'Thursday' => 'Kamis',
-		'Friday' => 'Jumat',
-		'Saturday' => 'Sabtu'
-	   );
-	   //$date=date('Y-m-d');
-	   $namahari = date('l', strtotime($date));
-	   
-	   return $daftar_hari[$namahari];
-}
+
+function educrypt($crypt = array())
+    {
+        $output = false;
+        $encrypt_method = "AES-256-CFB8";
 
 
-function sd_square($x, $mean) { return pow($x - $mean,2); }
-// Function to calculate standard deviation (uses sd_square)    
-function sd($array) {
-    // square root of sum of squares devided by N-1
-    return sqrt(array_sum(array_map("sd_square", $array, array_fill(0,count($array), (array_sum($array) / count($array)) ) ) ) / (count($array)-1) );
-}
+        if (is_array($crypt)) {
 
 
-function sortAssociativeArrayByKey($array, $key, $direction)
-{
 
-    switch ($direction) {
-        case "ASC":
-            usort($array, function ($first, $second) use ($key) {
-                return $first[$key] <=> $second[$key];
-            });
-            break;
-        case "DESC":
-            usort($array, function ($first, $second) use ($key) {
-                return $second[$key] <=> $first[$key];
-            });
-            break;
-        default:
-            break;
+            if ((isset($crypt['cid']) && $crypt['cid'] <> '') && (isset($crypt['secret']) && $crypt['secret'] <> '')) {
+
+
+                $secret_f = $crypt['cid'];
+                $secret_s = $crypt['secret'];
+
+                if (isset($crypt['data']) && is_string($crypt['data'])) {
+
+
+
+
+                    $string = $crypt['data'];
+                    if (is_string($secret_f) && is_string($secret_s)) {
+
+
+                        $key = hash('sha256', $secret_f);
+                        $iv = substr(hash('sha256', $secret_s), 0, 16);
+
+                        if (isset($crypt['action']) && $crypt['action'] <> '') {
+
+
+                            if ($crypt['action'] == 'encrypt') {
+                                $output = openssl_encrypt($string, $encrypt_method, $key, 0, $iv);
+                                $output = str_replace("=", $secret_f, base64_encode($output));
+                            } else if ($crypt['action'] == 'decrypt') {
+                                $output = openssl_decrypt(base64_decode(str_replace($secret_f, "=", $string)), $encrypt_method, $key, 0, $iv);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return $output;
     }
 
-    return $array;
-}
-
-function _group_by($array, $key) {
-    $return = array();
-    foreach($array as $val) {
-        $return[$val[$key]][] = $val;
-    }
-    return $return;
-}
